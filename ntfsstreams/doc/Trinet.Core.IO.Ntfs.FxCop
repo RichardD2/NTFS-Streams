@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.36" Name="Trinet.Core.IO.Ntfs">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">c:\program files\microsoft fxcop 1.36\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-US" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/../bin/Trinet.Core.IO.Ntfs.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.36">
+  <Namespaces>
+   <Namespace Name="Trinet.Core.IO.Ntfs">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2008-09-24 13:20:32Z">
+      <Issue>
+       <Item>Trinet.Core.IO.Ntfs</Item>
+      </Issue>
+     </Message>
+     <Message Id="Trinet" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-09-24 13:20:32Z">
+      <Issue Name="Namespace">
+       <Item>Trinet</Item>
+       <Item>Trinet.Core.IO.Ntfs</Item>
+      </Issue>
+      <Notes>
+       <User Name="richard">
+        <Note Id="0" />
+       </User>
+      </Notes>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/../bin/Trinet.Core.IO.Ntfs.dll">
+    <Modules>
+     <Module Name="trinet.core.io.ntfs.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2008-09-24 13:20:32Z">
+        <Issue Name="NoStrongName">
+         <Item>'Trinet.Core.IO.Ntfs.dll'</Item>
+        </Issue>
+       </Message>
+       <Message Id="Trinet" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-09-24 13:20:32Z">
+        <Issue Name="Assembly">
+         <Item>Trinet</Item>
+         <Item>'Trinet.Core.IO.Ntfs.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="richard">
+          <Note Id="0" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Trinet.Core.IO.Ntfs">
+        <Types>
+         <Type Name="AlternateDataStreamInfo">
+          <Members>
+           <Member Name="#Delete()">
+            <Messages>
+             <Message TypeName="ReviewImperativeSecurity" Category="Microsoft.Security" CheckId="CA2103" Created="2008-09-24 13:20:32Z">
+              <Issue Name="ClassMember">
+               <Item>'AlternateDataStreamInfo.Delete()'</Item>
+               <Item>'AlternateDataStreamInfo._filePath'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'this'</Item>
+               <Item>'AlternateDataStreamInfo.Delete()'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Open(System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,System.Int32,System.Boolean)">
+            <Messages>
+             <Message TypeName="ReviewImperativeSecurity" Category="Microsoft.Security" CheckId="CA2103" Created="2008-09-24 13:20:32Z">
+              <Issue Name="ClassMember">
+               <Item>'AlternateDataStreamInfo.Open(FileMode, FileAccess, FileShare, int, bool)'</Item>
+               <Item>'AlternateDataStreamInfo._filePath'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'this'</Item>
+               <Item>'AlternateDataStreamInfo.Open(FileMode, FileAccess, FileShare, int, bool)'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FileSystem">
+          <Members>
+           <Member Name="#DeleteAlternateDataStream(System.IO.FileSystemInfo,System.String)">
+            <Messages>
+             <Message TypeName="ReviewImperativeSecurity" Category="Microsoft.Security" CheckId="CA2103" Created="2008-09-24 13:20:32Z">
+              <Issue Name="MethodCall">
+               <Item>'FileSystem.DeleteAlternateDataStream(this FileSystemInfo, string)'</Item>
+               <Item>'FileSystemInfo.FullName.get()'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'file'</Item>
+               <Item>'FileSystem.DeleteAlternateDataStream(this FileSystemInfo, string)'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetAlternateDataStream(System.IO.FileSystemInfo,System.String,System.IO.FileMode)">
+            <Messages>
+             <Message TypeName="ReviewImperativeSecurity" Category="Microsoft.Security" CheckId="CA2103" Created="2008-09-24 13:20:32Z">
+              <Issue Name="MethodCall">
+               <Item>'FileSystem.GetAlternateDataStream(this FileSystemInfo, string, FileMode)'</Item>
+               <Item>'FileSystemInfo.FullName.get()'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+              <Issue Name="Parameter">
+               <Item>'file'</Item>
+               <Item>'FileSystem.GetAlternateDataStream(this FileSystemInfo, string, FileMode)'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ListAlternateDataStreams(System.IO.FileSystemInfo)">
+            <Messages>
+             <Message TypeName="ReviewImperativeSecurity" Category="Microsoft.Security" CheckId="CA2103" Created="2008-09-24 13:20:32Z">
+              <Issue Name="ClassMember">
+               <Item>'FileSystem.ListAlternateDataStreams(this FileSystemInfo)'</Item>
+               <Item>'FileSystem.&lt;&gt;c__DisplayClass1.path'</Item>
+               <Item>'FileIOPermission'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SafeNativeMethods">
+          <Members>
+           <Member Name="#SafeGetFileAttributes(System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-09-24 13:20:32Z">
+              <Issue>
+               <Item>'SafeNativeMethods.SafeGetFileAttributes(string)'</Item>
+               <Item>'Marshal.GetLastWin32Error()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SafeNativeMethods.SafeGetFileAttributes(string)'&#xD;&#xA;   -&gt;'SafeNativeMethods.SafeGetFileAttributes(string)'&#xD;&#xA;   -&gt;'FileSystem.AlternateDataStreamExists(this FileSystemInfo, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ThrowIOError(System.Int32,System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-07-27 16:32:25Z">
+              <Issue>
+               <Item>'SafeNativeMethods.ThrowIOError(int, string)'</Item>
+               <Item>'Marshal.ThrowExceptionForHR(int)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SafeNativeMethods.ThrowIOError(int, string)'&#xD;&#xA;   -&gt;'SafeNativeMethods.ThrowIOError(int, string)'&#xD;&#xA;   -&gt;'SafeNativeMethods.ThrowLastIOError(string)'&#xD;&#xA;   -&gt;'SafeNativeMethods.SafeGetFileAttributes(string)'&#xD;&#xA;   -&gt;'FileSystem.AlternateDataStreamExists(this FileSystemInfo, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ThrowLastIOError(System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-07-27 16:32:25Z">
+              <Issue>
+               <Item>'SafeNativeMethods.ThrowLastIOError(string)'</Item>
+               <Item>'Marshal.GetHRForLastWin32Error()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SafeNativeMethods.ThrowLastIOError(string)'&#xD;&#xA;   -&gt;'SafeNativeMethods.ThrowLastIOError(string)'&#xD;&#xA;   -&gt;'SafeNativeMethods.SafeGetFileAttributes(string)'&#xD;&#xA;   -&gt;'FileSystem.AlternateDataStreamExists(this FileSystemInfo, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SafeNativeMethods.ThrowLastIOError(string)'</Item>
+               <Item>'Marshal.GetLastWin32Error()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SafeNativeMethods.ThrowLastIOError(string)'&#xD;&#xA;   -&gt;'SafeNativeMethods.ThrowLastIOError(string)'&#xD;&#xA;   -&gt;'SafeNativeMethods.SafeGetFileAttributes(string)'&#xD;&#xA;   -&gt;'FileSystem.AlternateDataStreamExists(this FileSystemInfo, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Notes>
+   <User Name="richard">
+    <Note Id="0" Modified="2008-09-24 13:21:06Z">Spelling is correct.</Note>
+   </User>
+  </Notes>
+  <Rules>
+   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
+    <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Assembly">Correct the spelling of '{0}' in assembly name {1}.</Resolution>
+    <Resolution Name="Namespace">Correct the spelling of '{0}' in namespace name '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewImperativeSecurity" Category="Microsoft.Security" CheckId="CA2103">
+    <Resolution Name="ClassMember">Review the following for a possible security vulnerability: In {0}, the class member {1} is being passed to a {2} constructor.</Resolution>
+    <Resolution Name="MethodCall">Review the following for a possible security vulnerability: In {0}, the return value of a call to {1} is being passed to a {2} constructor.</Resolution>
+    <Resolution Name="Parameter">Review the following for a possible security vulnerability: Parameter {0} of {1} is being passed to a {2} constructor.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

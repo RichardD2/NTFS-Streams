@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Article Source</title>
+<link rel="stylesheet" type="text/css" href="//dj9okeyxktdvd.cloudfront.net/App_Themes/CodeProject/Css/Main.css?dt=2.8.140922.1" />
+<base href="http://www.codeproject.com/KB/cs/" />
+</head>
+<body>
+<!--
+HTML for article "Accessing alternative data-streams of files on an NTFS volume" by Richard Deeming
+URL: http://www.codeproject.com/KB/cs/ntfsstreams.aspx
+Copyright 2002 by Richard Deeming
+All formatting, additions and alterations Copyright © CodeProject, 1999-2014
+-->
+
+<!--
+/**
+  * Trinet.Core.IO.Ntfs - Utilities for working with alternate data streams on NTFS file systems.
+  * Copyright (C) 2002-2010 Richard Deeming
+  * 
+  * This code is free software: you can redistribute it and/or modify it under the terms of either
+  * - the Code Project Open License (CPOL) version 1 or later; or
+  * - the GNU General Public License as published by the Free Software Foundation, version 3 or later; or
+  * - the BSD 2-Clause License;
+  * 
+  * This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+  * See the license files for details.
+  * 
+  * You should have received a copy of the licenses along with this code. 
+  * If not, see <http://www.codeproject.com/info/cpol10.aspx>, <http://www.gnu.org/licenses/> 
+  * and <http://opensource.org/licenses/bsd-license.php>.
+*/
+-->
+
+
+
+<div>
+
+
+
+
+<!-- Start Article -->
+<span id="ArticleContent">
+
+
+
+<h2>Introduction</h2>
+
+<p>Since NT 3.1, the NTFS file system has supported multiple data-streams for files. There has never been built-in support for viewing or manipulating these additional streams, but the Windows API functions include support for them with a special file syntax: <code><em>Filename.ext</em>:<em>StreamName</em></code>. Even Win9x machines can access the alternative data streams of files on any NTFS volume they have access to, e.g., through a mapped drive. Because the <code>Scripting.FileSystemObject</code> and many other libraries call the <code>CreateFile</code> API behind the scenes, even scripts have been able to access alternative streams quite easily (although enumerating the existing streams has always been tricky).</p>
+
+<p>In .NET, however, it seems someone decided to add some checking to the format of filenames. If you attempt to open a <code>FileStream</code> on an alternative stream, you will get a &quot;Path Format not supported&quot; exception. I have been unable to find any class in the CLR that provides support for alternative data streams, so I decided to roll my own.</p>
+
+<h3>Update</h3>
+
+<p>I originally wrote this code six years ago, targeting v1 of the .NET Framework. Looking at the code now, it seems quite messy, and has several bugs and problems which were mentioned in the comments. I have since completely re-written the code for .NET v3.5, and (hopefully) fixed the bugs.</p>
+
+<p>The new code is not compatible with the original version. However, I have included a sample compatibility wrapper which maps the old API to the new API. You can find these files under the &quot;<em>other/Compatibility wrapper</em>&quot; folder in the download.</p>
+
+<h3>Bugs / Issues Fixed</h3>
+
+<ul>
+<li>The code now uses the <code>FileSystemInfo</code> class rather than the <code>FileInfo</code> class. This allows you to access alternate data streams attached to folders as well as files. (Suggested by <a href="http://www.codeproject.com/script/Membership/Profiles.aspx?mid=37825">Dan Elebash</a>.)</li>
+
+<li>The code now uses <code>SafeFileHandle</code> instead of <code>IntPtr</code> for the file handle. (Suggested by <a href="http://www.codeproject.com/script/Membership/Profiles.aspx?mid=2298128">Moomansun</a>.)</li>
+
+<li>The code is now 64-bit compatible. (Reported by <a href="http://www.codeproject.com/script/Membership/Profiles.aspx?mid=3546603">John SMith 5634552745</a>.)</li>
+
+<li>The code now correctly calls <code>BackupRead</code> with the <code>bAbort</code> parameter set to <code>true</code> after enumerating the streams. (Reported by <a href="http://www.codeproject.com/script/Membership/Profiles.aspx?mid=3308589">scooter_jsm</a>.)</li>
+
+<li>The number of global memory allocations required to read the streams from a file has been reduced. (Suggested by <a href="http://www.codeproject.com/script/Membership/Profiles.aspx?mid=3308589">scooter_jsm</a>.)</li>
+
+<li><strong>v2.1</strong>: <code>ValidateStreamName</code> now accepts stream names which contain <a href="http://msdn.microsoft.com/en-us/library/aa365247">characters with ASCII codes between 1 and 31</a>. (Reported by <a href="http://www.codeproject.com/script/Membership/View.aspx?mid=112918">Andy Missico</a>.)</li>
+
+<li><strong>v2.1</strong>: The code will now attempt to map standard IO errors to the equivalent .NET <code>Exception</code> type. (Suggested by <a href="http://www.codeproject.com/script/Membership/View.aspx?mid=112918">Andy Missico</a>.)</li>
+</ul>
+
+<h2>Using the Classes</h2>
+
+<p>The <code>AlternateDataStreamInfo</code> class represents the details of an individual stream, and provides methods to create, open, or delete the stream.</p>
+
+<p>The static <code>FileSystem</code> class provides methods to retrieve the list of streams for a file, retrieve a specific stream from a file, determine whether a stream exists, and delete a specific stream.</p>
+
+<p>All methods on the <code>FileSystem</code> class offer overloads which accept either a path or a <code>FileSystemInfo</code> object. The overloads which accept a <code>FileSystemInfo</code> object can also be invoked as extension methods.</p>
+
+<h3>Example:</h3>
+
+<pre lang="Cs">using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using Trinet.Core.IO.Ntfs;
+
+...
+
+FileInfo file = new FileInfo(path);
+
+// List the additional streams for a file:
+foreach (AlternateDataStreamInfo s in file.ListAlternateDataStreams())
+{
+    Console.WriteLine(&quot;{0} - {1} bytes&quot;, s.Name, s.Size);
+}
+
+// Read the &quot;Zone.Identifier&quot; stream, if it exists:
+if (file.AlternateDataStreamExists(&quot;Zone.Identifier&quot;))
+{
+    Console.WriteLine(&quot;Found zone identifier stream:&quot;);
+    
+    AlternateDataStreamInfo s = 
+       file.GetAlternateDataStream(&quot;Zone.Identifier&quot;,
+                                   FileMode.Open);
+    using (TextReader reader = s.OpenText())
+    {
+        Console.WriteLine(reader.ReadToEnd());
+    }
+    
+    // Delete the stream:
+    s.Delete();
+}
+else
+{
+    Console.WriteLine(&quot;No zone identifier stream found.&quot;);
+}
+
+// Alternative method to delete the stream:
+file.DeleteAlternateDataStream(&quot;Zone.Identifier&quot;);</pre>
+
+<h2>Files Included</h2>
+
+<ul>
+<li>The <em>Trinet.Core.IO.Ntfs</em> folder contains the source code.</li>
+
+<li>The <em>doc</em> folder contains the documentation and FxCop project.</li>
+
+<li>The <em>bin</em> folder contains the compiled assembly.</li>
+
+<li>The <em>other</em> folder contains the compatibility wrapper, and a sample to recursively delete the &quot;Zone.Identifier&quot; stream from all files in a given path.</li>
+</ul>
+
+<h2>References</h2>
+
+<p>If you want more information on NTFS programming, or the C++ code I based this on, see Dino Esposito's MSDN article from March 2000: <a href="http://msdn.microsoft.com/en-us/library/ms810604.aspx">http://msdn.microsoft.com/en-us/library/ms810604.aspx</a> [<a href="http://msdn.microsoft.com/en-us/library/ms810604.aspx" target="_blank">^</a>].</p>
+
+<h2>History</h2>
+
+<ul>
+<li><strong>v1 - 1 August 2002</strong> - Initial release, targeting .NET 1.0.</li>
+
+<li><strong>v2 - 16 September 2008</strong> - Re-written to target .NET 3.5; major changes include:</li>
+
+<ul>
+<li>Replaced <code>FileInfo</code> with <code>FileSystemInfo</code>.</li>
+
+<li>Replaced <code>IntPtr</code> with <code>SafeFileHandle</code>.</li>
+
+<li>Made the P/Invoke calls 64-bit compatible.</li>
+
+<li>Made the code abort the <code>BackupRead</code> operation after enumerating the streams.</li>
+
+<li>Reduced the number of global memory allocations required.</li>
+</ul>
+
+<li><strong>v2.1 - 28 July 2010</strong> - Minor fixes suggested by <a href="http://www.codeproject.com/script/Membership/View.aspx?mid=112918">Andy Missico</a>:</li>
+
+<ul>
+<li>Changed <code>ValidateStreamName</code> to accept stream names containing characters with ASCII codes between 1 and 31 (see <a href="http://msdn.microsoft.com/en-us/library/aa365247">msdn.microsoft.com/en-us/library/aa365247</a>).</li>
+
+<li>Added mapping of standard IO errors to the correct .NET exceptions.</li>
+</ul>
+</ul>
+
+
+
+
+</span>
+<!-- End Article -->
+
+
+
+
+</div> 
+</body>
+</html>
