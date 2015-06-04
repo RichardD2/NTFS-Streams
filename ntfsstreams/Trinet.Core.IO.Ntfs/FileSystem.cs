@@ -1,4 +1,4 @@
-/**
+/*
   * Trinet.Core.IO.Ntfs - Utilities for working with alternate data streams on NTFS file systems.
   * Copyright (C) 2002-2010 Richard Deeming
   * 

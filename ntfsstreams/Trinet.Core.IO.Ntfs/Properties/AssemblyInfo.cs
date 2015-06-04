@@ -1,4 +1,4 @@
-/**
+/*
   * Trinet.Core.IO.Ntfs - Utilities for working with alternate data streams on NTFS file systems.
   * Copyright (C) 2002-2010 Richard Deeming
   * 
@@ -27,9 +27,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Trinet.Core.IO.Ntfs")]
 [assembly: AssemblyDescription("Utilities for working with alternate data streams on NTFS file systems.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Trinet Ltd")]
+[assembly: AssemblyCompany("Richard Deeming")]
 [assembly: AssemblyProduct("Trinet.Core.IO.Ntfs")]
-[assembly: AssemblyCopyright("Copyright © Trinet Ltd 2008")]
+[assembly: AssemblyCopyright("Copyright © 2002 - 2010 Richard Deeming")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(true)]
@@ -54,4 +54,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.5.0.0")]
 [assembly: AssemblyFileVersion("3.5.0.0")]
+[assembly: AssemblyInformationalVersionAttribute("2010-06-28")]
 [assembly: NeutralResourcesLanguageAttribute("en-GB")]

@@ -4,6 +4,10 @@ A library for working with alternate data streams on NTFS file systems from .NET
 
 Originally published on CodeProject: http://www.codeproject.com/KB/cs/ntfsstreams.aspx
 
+Now available as a NuGet package: https://www.nuget.org/packages/Trinet.Core.IO.Ntfs/
+
+    Install-Package Trinet.Core.IO.Ntfs
+
 
 ##Introduction
 
