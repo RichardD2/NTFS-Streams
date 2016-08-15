@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Richard Deeming")]
 [assembly: AssemblyProduct("Trinet.Core.IO.Ntfs")]
-[assembly: AssemblyCopyright("Copyright © 2002 - 2010 Richard Deeming")]
+[assembly: AssemblyCopyright("Copyright © 2002 - 2016 Richard Deeming")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(true)]
@@ -52,7 +52,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.5.0.0")]
-[assembly: AssemblyFileVersion("3.5.0.0")]
-[assembly: AssemblyInformationalVersionAttribute("2010-06-28")]
-[assembly: NeutralResourcesLanguageAttribute("en-GB")]
+[assembly: AssemblyVersion("3.5.0.1")]
+[assembly: AssemblyFileVersion("3.5.0.1")]
+[assembly: AssemblyInformationalVersion("2010-06-28")]
+[assembly: NeutralResourcesLanguage("en-GB")]
