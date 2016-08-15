@@ -43,6 +43,63 @@
             otherwise, <see langword="false"/>.
             </param>
         </member>
+        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.FullPath">
+            <summary>
+            Returns the full path of this stream.
+            </summary>
+            <value>
+            The full path of this stream.
+            </value>
+        </member>
+        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.FilePath">
+            <summary>
+            Returns the full path of the file which contains the stream.
+            </summary>
+            <value>
+            The full file-system path of the file which contains the stream.
+            </value>
+        </member>
+        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.Name">
+            <summary>
+            Returns the name of the stream.
+            </summary>
+            <value>
+            The name of the stream.
+            </value>
+        </member>
+        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.Exists">
+            <summary>
+            Returns a flag indicating whether the specified stream exists.
+            </summary>
+            <value>
+            <see langword="true"/> if the stream exists;
+            otherwise, <see langword="false"/>.
+            </value>
+        </member>
+        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.Size">
+            <summary>
+            Returns the size of the stream, in bytes.
+            </summary>
+            <value>
+            The size of the stream, in bytes.
+            </value>
+        </member>
+        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.StreamType">
+            <summary>
+            Returns the type of data.
+            </summary>
+            <value>
+            One of the <see cref="T:Trinet.Core.IO.Ntfs.FileStreamType"/> values.
+            </value>
+        </member>
+        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.Attributes">
+            <summary>
+            Returns attributes of the data stream.
+            </summary>
+            <value>
+            A combination of <see cref="T:Trinet.Core.IO.Ntfs.FileStreamAttributes"/> values.
+            </value>
+        </member>
         <member name="M:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.ToString">
             <summary>
             Returns a <see cref="T:System.String"/> that represents the current instance.
@@ -390,63 +447,6 @@
             There was an error opening the stream.
             </exception>
         </member>
-        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.FullPath">
-            <summary>
-            Returns the full path of this stream.
-            </summary>
-            <value>
-            The full path of this stream.
-            </value>
-        </member>
-        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.FilePath">
-            <summary>
-            Returns the full path of the file which contains the stream.
-            </summary>
-            <value>
-            The full file-system path of the file which contains the stream.
-            </value>
-        </member>
-        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.Name">
-            <summary>
-            Returns the name of the stream.
-            </summary>
-            <value>
-            The name of the stream.
-            </value>
-        </member>
-        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.Exists">
-            <summary>
-            Returns a flag indicating whether the specified stream exists.
-            </summary>
-            <value>
-            <see langword="true"/> if the stream exists;
-            otherwise, <see langword="false"/>.
-            </value>
-        </member>
-        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.Size">
-            <summary>
-            Returns the size of the stream, in bytes.
-            </summary>
-            <value>
-            The size of the stream, in bytes.
-            </value>
-        </member>
-        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.StreamType">
-            <summary>
-            Returns the type of data.
-            </summary>
-            <value>
-            One of the <see cref="T:Trinet.Core.IO.Ntfs.FileStreamType"/> values.
-            </value>
-        </member>
-        <member name="P:Trinet.Core.IO.Ntfs.AlternateDataStreamInfo.Attributes">
-            <summary>
-            Returns attributes of the data stream.
-            </summary>
-            <value>
-            A combination of <see cref="T:Trinet.Core.IO.Ntfs.FileStreamAttributes"/> values.
-            </value>
-        </member>
         <member name="T:Trinet.Core.IO.Ntfs.FileStreamAttributes">
             <summary>
             Represents the attributes of a file stream.
@@ -559,7 +559,7 @@
         </member>
         <member name="M:Trinet.Core.IO.Ntfs.FileSystem.ListAlternateDataStreams(System.IO.FileSystemInfo)">
             <summary>
-            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br/>
+            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br />
             Returns a read-only list of alternate data streams for the specified file.
             </summary>
             <param name="file">
@@ -612,7 +612,7 @@
         </member>
         <member name="M:Trinet.Core.IO.Ntfs.FileSystem.AlternateDataStreamExists(System.IO.FileSystemInfo,System.String)">
             <summary>
-            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br/>
+            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br />
             Returns a flag indicating whether the specified alternate data stream exists.
             </summary>
             <param name="file">
@@ -657,7 +657,7 @@
         </member>
         <member name="M:Trinet.Core.IO.Ntfs.FileSystem.GetAlternateDataStream(System.IO.FileSystemInfo,System.String,System.IO.FileMode)">
             <summary>
-            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br/>
+            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br />
             Opens an alternate data stream.
             </summary>
             <param name="file">
@@ -698,7 +698,7 @@
         </member>
         <member name="M:Trinet.Core.IO.Ntfs.FileSystem.GetAlternateDataStream(System.IO.FileSystemInfo,System.String)">
             <summary>
-            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br/>
+            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br />
             Opens an alternate data stream.
             </summary>
             <param name="file">
@@ -801,7 +801,7 @@
         </member>
         <member name="M:Trinet.Core.IO.Ntfs.FileSystem.DeleteAlternateDataStream(System.IO.FileSystemInfo,System.String)">
             <summary>
-            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br/>
+            <span style="font-weight:bold;color:#a00;">(Extension Method)</span><br />
             Deletes the specified alternate data stream if it exists.
             </summary>
             <param name="file">
@@ -883,6 +883,23 @@
             Initializes a new instance of the <see cref="T:Trinet.Core.IO.Ntfs.SafeHGlobalHandle"/> class.
             </summary>
         </member>
+        <member name="P:Trinet.Core.IO.Ntfs.SafeHGlobalHandle.IsInvalid">
+            <summary>
+            Gets a value indicating whether the handle value is invalid.
+            </summary>
+            <value>
+            <see langword="true"/> if the handle value is invalid;
+            otherwise, <see langword="false"/>.
+            </value>
+        </member>
+        <member name="P:Trinet.Core.IO.Ntfs.SafeHGlobalHandle.Size">
+            <summary>
+            Returns the size of this memory block.
+            </summary>
+            <value>
+            The size of this memory block, in bytes.
+            </value>
+        </member>
         <member name="M:Trinet.Core.IO.Ntfs.SafeHGlobalHandle.Allocate(System.Int32)">
             <summary>
             Allocates memory from the unmanaged memory of the process using GlobalAlloc.
@@ -915,32 +932,18 @@
             In this case, it generates a releaseHandleFailed MDA Managed Debugging Assistant.
             </returns>
         </member>
-        <member name="P:Trinet.Core.IO.Ntfs.SafeHGlobalHandle.IsInvalid">
-            <summary>
-            Gets a value indicating whether the handle value is invalid.
-            </summary>
-            <value>
-            <see langword="true"/> if the handle value is invalid;
-            otherwise, <see langword="false"/>.
-            </value>
-        </member>
-        <member name="P:Trinet.Core.IO.Ntfs.SafeHGlobalHandle.Size">
-            <summary>
-            Returns the size of this memory block.
-            </summary>
-            <value>
-            The size of this memory block, in bytes.
-            </value>
-        </member>
         <member name="T:Trinet.Core.IO.Ntfs.SafeNativeMethods">
             <summary>
             Safe native methods.
             </summary>
         </member>
-        <member name="M:Trinet.Core.IO.Ntfs.StreamName.#ctor">
+        <member name="P:Trinet.Core.IO.Ntfs.StreamName.MemoryBlock">
             <summary>
-            Initializes a new instance of the <see cref="T:Trinet.Core.IO.Ntfs.StreamName"/> class.
+            Returns the handle to the block of memory.
             </summary>
+            <value>
+            The <see cref="T:Trinet.Core.IO.Ntfs.SafeHGlobalHandle"/> representing the block of memory.
+            </value>
         </member>
         <member name="M:Trinet.Core.IO.Ntfs.StreamName.Dispose">
             <summary>
@@ -980,14 +983,6 @@
             <returns>
             The stream name.
             </returns>
-        </member>
-        <member name="P:Trinet.Core.IO.Ntfs.StreamName.MemoryBlock">
-            <summary>
-            Returns the handle to the block of memory.
-            </summary>
-            <value>
-            The <see cref="T:Trinet.Core.IO.Ntfs.SafeHGlobalHandle"/> representing the block of memory.
-            </value>
         </member>
         <member name="T:Trinet.Core.IO.Ntfs.Properties.Resources">
             <summary>
