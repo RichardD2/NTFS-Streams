@@ -9,8 +9,8 @@
     <projectUrl>https://github.com/RichardD2/NTFS-Streams</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release to NuGet.</releaseNotes>
-    <copyright>Copyright 2015 Richard Deeming</copyright>
+    <releaseNotes>Fixes a bug where zero-length alternate streams prevented other streams from being enumerated.</releaseNotes>
+    <copyright>Copyright 2016 Richard Deeming</copyright>
     <tags>NTFS Alternate Data Streams</tags>
   </metadata>
 </package>

@@ -54,5 +54,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.5.0.1")]
 [assembly: AssemblyFileVersion("3.5.0.1")]
-[assembly: AssemblyInformationalVersion("2010-06-28")]
+[assembly: AssemblyInformationalVersion("3.5.0.1")]
 [assembly: NeutralResourcesLanguage("en-GB")]
