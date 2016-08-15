@@ -473,10 +473,13 @@ namespace Trinet.Core.IO.Ntfs
 								}
 
 								// Skip the contents of the stream:
-								int bytesSeekedLow, bytesSeekedHigh;
-								if (!finished && !BackupSeek(hFile, streamId.Size.Low, streamId.Size.High, out bytesSeekedLow, out bytesSeekedHigh, ref context))
+								if (0 != streamId.Size.Low || 0 != streamId.Size.High)
 								{
-									finished = true;
+									int bytesSeekedLow, bytesSeekedHigh;
+									if (!finished && !BackupSeek(hFile, streamId.Size.Low, streamId.Size.High, out bytesSeekedLow, out bytesSeekedHigh, ref context))
+									{
+										finished = true;
+									}
 								}
 							}
 						}
