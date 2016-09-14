@@ -1,6 +1,6 @@
 /*
   * Trinet.Core.IO.Ntfs - Utilities for working with alternate data streams on NTFS file systems.
-  * Copyright (C) 2002-2010 Richard Deeming
+  * Copyright (C) 2002-2016 Richard Deeming
   * 
   * This code is free software: you can redistribute it and/or modify it under the terms of either
   * - the Code Project Open License (CPOL) version 1 or later; or

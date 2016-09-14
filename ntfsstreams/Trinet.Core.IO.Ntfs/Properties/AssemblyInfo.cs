@@ -1,6 +1,6 @@
 /*
   * Trinet.Core.IO.Ntfs - Utilities for working with alternate data streams on NTFS file systems.
-  * Copyright (C) 2002-2010 Richard Deeming
+  * Copyright (C) 2002-2016 Richard Deeming
   * 
   * This code is free software: you can redistribute it and/or modify it under the terms of either
   * - the Code Project Open License (CPOL) version 1 or later; or
@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Richard Deeming")]
 [assembly: AssemblyProduct("Trinet.Core.IO.Ntfs")]
-[assembly: AssemblyCopyright("Copyright © 2002 - 2016 Richard Deeming")]
+[assembly: AssemblyCopyright("Copyright © 2002-2016 Richard Deeming")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(true)]
@@ -52,7 +52,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.5.0.1")]
-[assembly: AssemblyFileVersion("3.5.0.1")]
-[assembly: AssemblyInformationalVersion("3.5.0.1")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.0.0")]
+[assembly: AssemblyInformationalVersion("4.0.0.0")]
 [assembly: NeutralResourcesLanguage("en-GB")]

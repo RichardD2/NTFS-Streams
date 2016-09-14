@@ -9,7 +9,19 @@
     <projectUrl>https://github.com/RichardD2/NTFS-Streams</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Fixes a bug where zero-length alternate streams prevented other streams from being enumerated.</releaseNotes>
+    <releaseNotes>
+##4.0.0.0
+
+### IMPROVEMENTS:
+
+ * The assembly now has a strong name.
+
+##3.5.0.1
+
+### BUG FIXES:
+
+ * Fixes a bug where zero-length alternate streams prevented other streams from being enumerated.
+	</releaseNotes>
     <copyright>Copyright 2016 Richard Deeming</copyright>
     <tags>NTFS Alternate Data Streams</tags>
   </metadata>
