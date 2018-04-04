@@ -70,7 +70,6 @@ All methods on the `FileSystem` class offer overloads which accept either a path
 
 * The *Trinet.Core.IO.Ntfs* folder contains the source code.
 * The *doc* folder contains the documentation and FxCop project.
-* The *binaries* folder contains the compiled assembly.
 * The *other* folder contains a compatibility wrapper for the original version of this code, and a sample to recursively delete the "Zone.Identifier" stream from all files in a given path.
 
 
@@ -82,7 +81,7 @@ http://msdn.microsoft.com/en-us/library/ms810604.aspx
 
 ## License
 
-Copyright (c) 2002-2010 Richard Deeming
+Copyright (c) 2002-2018 Richard Deeming
 All rights reserved.
 
 This code is free software: you can redistribute it and/or modify it under the terms of either
