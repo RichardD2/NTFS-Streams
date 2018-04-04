@@ -35,6 +35,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RepositoryUrl>https://github.com/RichardD2/NTFS-Streams</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
+		<PackageTags>NTFS Alternate Data Streams</PackageTags>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
