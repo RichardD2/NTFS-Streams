@@ -28,21 +28,9 @@ namespace Trinet.Core.IO.Ntfs
 	/// <summary>
 	/// Represents the details of an alternative data stream.
 	/// </summary>
-	[DebuggerDisplay("{FullPath}")]
+	[DebuggerDisplay("{" + nameof(FullPath) + "}")]
 	public sealed class AlternateDataStreamInfo : IEquatable<AlternateDataStreamInfo>
 	{
-		#region Private Data
-
-		private readonly string _fullPath;
-		private readonly string _filePath;
-		private readonly string _streamName;
-		private readonly FileStreamType _streamType;
-		private readonly FileStreamAttributes _attributes;
-		private readonly long _size;
-		private readonly bool _exists;
-
-		#endregion
-
 		#region Constructor
 
 		/// <summary>
@@ -57,14 +45,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// </param>
 		internal AlternateDataStreamInfo(string filePath, SafeNativeMethods.Win32StreamInfo info)
 		{
-			_filePath = filePath;
-			_streamName = info.StreamName;
-			_streamType = info.StreamType;
-			_attributes = info.StreamAttributes;
-			_size = info.StreamSize;
-			_exists = true;
+			FilePath = filePath;
+			Name = info.StreamName;
+			StreamType = info.StreamType;
+			Attributes = info.StreamAttributes;
+			Size = info.StreamSize;
+			Exists = true;
 
-			_fullPath = SafeNativeMethods.BuildStreamPath(_filePath, _streamName);
+			FullPath = SafeNativeMethods.BuildStreamPath(FilePath, Name);
 		}
 
 		/// <summary>
@@ -90,16 +78,16 @@ namespace Trinet.Core.IO.Ntfs
 		internal AlternateDataStreamInfo(string filePath, string streamName, string fullPath, bool exists)
 		{
 			if (string.IsNullOrEmpty(fullPath)) fullPath = SafeNativeMethods.BuildStreamPath(filePath, streamName);
-			_streamType = FileStreamType.AlternateDataStream;
+			StreamType = FileStreamType.AlternateDataStream;
 
-			_filePath = filePath;
-			_streamName = streamName;
-			_fullPath = fullPath;
-			_exists = exists;
+			FilePath = filePath;
+			Name = streamName;
+			FullPath = fullPath;
+			Exists = exists;
 
-			if (_exists)
+			if (Exists)
 			{
-				_size = SafeNativeMethods.GetFileSize(_fullPath);
+				Size = SafeNativeMethods.GetFileSize(FullPath);
 			}
 		}
 
@@ -113,10 +101,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The full path of this stream.
 		/// </value>
-		public string FullPath
-		{
-			get { return _fullPath; }
-		}
+		public string FullPath { get; }
 
 		/// <summary>
 		/// Returns the full path of the file which contains the stream.
@@ -124,10 +109,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The full file-system path of the file which contains the stream.
 		/// </value>
-		public string FilePath
-		{
-			get { return _filePath; }
-		}
+		public string FilePath { get; }
 
 		/// <summary>
 		/// Returns the name of the stream.
@@ -135,10 +117,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The name of the stream.
 		/// </value>
-		public string Name
-		{
-			get { return _streamName; }
-		}
+		public string Name { get; }
 
 		/// <summary>
 		/// Returns a flag indicating whether the specified stream exists.
@@ -147,10 +126,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// <see langword="true"/> if the stream exists;
 		/// otherwise, <see langword="false"/>.
 		/// </value>
-		public bool Exists
-		{
-			get { return _exists; }
-		}
+		public bool Exists { get; }
 
 		/// <summary>
 		/// Returns the size of the stream, in bytes.
@@ -158,10 +134,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The size of the stream, in bytes.
 		/// </value>
-		public long Size
-		{
-			get { return _size; }
-		}
+		public long Size { get; }
 
 		/// <summary>
 		/// Returns the type of data.
@@ -170,10 +143,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// One of the <see cref="FileStreamType"/> values.
 		/// </value>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		public FileStreamType StreamType
-		{
-			get { return _streamType; }
-		}
+		public FileStreamType StreamType { get; }
 
 		/// <summary>
 		/// Returns attributes of the data stream.
@@ -182,10 +152,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// A combination of <see cref="FileStreamAttributes"/> values.
 		/// </value>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		public FileStreamAttributes Attributes
-		{
-			get { return _attributes; }
-		}
+		public FileStreamAttributes Attributes { get; }
 
 		#endregion
 
@@ -213,8 +180,8 @@ namespace Trinet.Core.IO.Ntfs
 		public override int GetHashCode()
 		{
 			var comparer = StringComparer.OrdinalIgnoreCase;
-			return comparer.GetHashCode(_filePath ?? string.Empty)
-				^ comparer.GetHashCode(_streamName ?? string.Empty);
+			return comparer.GetHashCode(FilePath ?? string.Empty)
+				^ comparer.GetHashCode(Name ?? string.Empty);
 		}
 
 		/// <summary>
@@ -229,13 +196,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </returns>
 		public override bool Equals(object obj)
 		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-
-			var other = obj as AlternateDataStreamInfo;
-			if (!ReferenceEquals(null, other)) return Equals(other);
-
-			return false;
+			return Equals(obj as AlternateDataStreamInfo);
 		}
 
 		/// <summary>
@@ -255,8 +216,8 @@ namespace Trinet.Core.IO.Ntfs
 			if (ReferenceEquals(this, other)) return true;
 
 			var comparer = StringComparer.OrdinalIgnoreCase;
-			return comparer.Equals(_filePath ?? string.Empty, other._filePath ?? string.Empty)
-				&& comparer.Equals(_streamName ?? string.Empty, other._streamName ?? string.Empty);
+			return comparer.Equals(FilePath ?? string.Empty, other.FilePath ?? string.Empty)
+				&& comparer.Equals(Name ?? string.Empty, other.Name ?? string.Empty);
 		}
 
 		/// <summary>
@@ -274,10 +235,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </returns>
 		public static bool operator ==(AlternateDataStreamInfo first, AlternateDataStreamInfo second)
 		{
-			if (ReferenceEquals(first, second)) return true;
-			if (ReferenceEquals(null, first)) return false;
-			if (ReferenceEquals(null, second)) return false;
-			return first.Equals(second);
+			return Equals(first, second);
 		}
 
 		/// <summary>
@@ -295,10 +253,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </returns>
 		public static bool operator !=(AlternateDataStreamInfo first, AlternateDataStreamInfo second)
 		{
-			if (ReferenceEquals(first, second)) return false;
-			if (ReferenceEquals(null, first)) return true;
-			if (ReferenceEquals(null, second)) return true;
-			return !first.Equals(second);
+			return !Equals(first, second);
 		}
 
 		#endregion
@@ -326,8 +281,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public bool Delete()
 		{
+#if NET35
 			const FileIOPermissionAccess permAccess = FileIOPermissionAccess.Write;
-			new FileIOPermission(permAccess, _filePath).Demand();
+			new FileIOPermission(permAccess, FilePath).Demand();
+#endif
+
 			return SafeNativeMethods.SafeDeleteFile(FullPath);
 		}
 
@@ -335,6 +293,7 @@ namespace Trinet.Core.IO.Ntfs
 
 		#region -Open
 
+#if NETFULL
 		/// <summary>
 		/// Calculates the access to demand.
 		/// </summary>
@@ -385,6 +344,7 @@ namespace Trinet.Core.IO.Ntfs
 
 			return permAccess;
 		}
+#endif
 
 		/// <summary>
 		/// Opens this alternate data stream.
@@ -429,10 +389,12 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public FileStream Open(FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync)
 		{
-			if (0 >= bufferSize) throw new ArgumentOutOfRangeException("bufferSize", bufferSize, null);
+			if (0 >= bufferSize) throw new ArgumentOutOfRangeException(nameof(bufferSize), bufferSize, null);
 
+#if NET35
 			FileIOPermissionAccess permAccess = CalculateAccess(mode, access);
-			new FileIOPermission(permAccess, _filePath).Demand();
+			new FileIOPermission(permAccess, FilePath).Demand();
+#endif
 
 			SafeNativeMethods.NativeFileFlags flags = useAsync ? SafeNativeMethods.NativeFileFlags.Overlapped : 0;
 			var handle = SafeNativeMethods.SafeCreateFile(FullPath, access.ToNative(), share, IntPtr.Zero, mode, flags, IntPtr.Zero);

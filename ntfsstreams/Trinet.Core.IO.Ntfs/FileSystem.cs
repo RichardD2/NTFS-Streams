@@ -25,38 +25,11 @@ using System.Security.Permissions;
 
 namespace Trinet.Core.IO.Ntfs
 {
-	using Resources = Properties.Resources;
-
 	/// <summary>
 	/// File-system utilities.
 	/// </summary>
 	public static class FileSystem
 	{
-		#region Create FileSystemInfo
-
-		/// <summary>
-		/// Creates a <see cref="FileSystemInfo"/> for the specified path.
-		/// </summary>
-		/// <param name="path">
-		/// The path of the file or directory.
-		/// </param>
-		/// <returns>
-		/// The <see cref="FileSystemInfo"/> representing the file or directory.
-		/// </returns>
-		/// <exception cref="ArgumentNullException">
-		/// <paramref name="path"/> is <see langword="null"/> or empty.
-		/// </exception>
-		private static FileSystemInfo CreateInfo(string path)
-		{
-			if (string.IsNullOrEmpty(path)) throw new ArgumentNullException("path");
-
-			path = Path.GetFullPath(path);
-			if (!File.Exists(path) && Directory.Exists(path)) return new DirectoryInfo(path);
-			return new FileInfo(path);
-		}
-
-		#endregion
-
 		#region List Streams
 
 		/// <summary>
@@ -85,11 +58,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static IList<AlternateDataStreamInfo> ListAlternateDataStreams(this FileSystemInfo file)
 		{
-			if (null == file) throw new ArgumentNullException("file");
+			if (null == file) throw new ArgumentNullException(nameof(file));
 			if (!file.Exists) throw new FileNotFoundException(null, file.FullName);
 
 			string path = file.FullName;
+
+#if NET35
 			new FileIOPermission(FileIOPermissionAccess.Read, path).Demand();
+#endif
 
 			return SafeNativeMethods.ListStreams(path)
 				.Select(s => new AlternateDataStreamInfo(path, s))
@@ -123,8 +99,16 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static IList<AlternateDataStreamInfo> ListAlternateDataStreams(string filePath)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
-			return CreateInfo(filePath).ListAlternateDataStreams();
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+			if (!SafeNativeMethods.FileExists(filePath)) throw new FileNotFoundException(null, filePath);
+
+#if NET35
+			new FileIOPermission(FileIOPermissionAccess.Read, filePath).Demand();
+#endif
+
+			return SafeNativeMethods.ListStreams(filePath)
+				.Select(s => new AlternateDataStreamInfo(filePath, s))
+				.ToList().AsReadOnly();
 		}
 
 		#endregion
@@ -153,11 +137,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static bool AlternateDataStreamExists(this FileSystemInfo file, string streamName)
 		{
-			if (null == file) throw new ArgumentNullException("file");
+			if (null == file) throw new ArgumentNullException(nameof(file));
 			SafeNativeMethods.ValidateStreamName(streamName);
 
 			string path = SafeNativeMethods.BuildStreamPath(file.FullName, streamName);
-			return -1 != SafeNativeMethods.SafeGetFileAttributes(path);
+			return SafeNativeMethods.FileExists(path);
 		}
 
 		/// <summary>
@@ -183,8 +167,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static bool AlternateDataStreamExists(string filePath, string streamName)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
-			return CreateInfo(filePath).AlternateDataStreamExists(streamName);
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+			SafeNativeMethods.ValidateStreamName(streamName);
+
+			string path = SafeNativeMethods.BuildStreamPath(filePath, streamName);
+			return SafeNativeMethods.FileExists(path);
 		}
 
 		#endregion
@@ -232,31 +219,30 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static AlternateDataStreamInfo GetAlternateDataStream(this FileSystemInfo file, string streamName, FileMode mode)
 		{
-			if (null == file) throw new ArgumentNullException("file");
+			if (null == file) throw new ArgumentNullException(nameof(file));
 			if (!file.Exists) throw new FileNotFoundException(null, file.FullName);
 			SafeNativeMethods.ValidateStreamName(streamName);
 
 			if (FileMode.Truncate == mode || FileMode.Append == mode)
 			{
-				throw new NotSupportedException(string.Format(Resources.Culture,
-					Resources.Error_InvalidMode, mode));
+				throw new NotSupportedException(Resources.Error_InvalidMode(mode));
 			}
 
+#if NET35
 			FileIOPermissionAccess permAccess = (FileMode.Open == mode) ? FileIOPermissionAccess.Read : FileIOPermissionAccess.Read | FileIOPermissionAccess.Write;
 			new FileIOPermission(permAccess, file.FullName).Demand();
+#endif
 
 			string path = SafeNativeMethods.BuildStreamPath(file.FullName, streamName);
-			bool exists = -1 != SafeNativeMethods.SafeGetFileAttributes(path);
+			bool exists = SafeNativeMethods.FileExists(path);
 
 			if (!exists && FileMode.Open == mode)
 			{
-				throw new IOException(string.Format(Resources.Culture,
-					Resources.Error_StreamNotFound, streamName, file.Name));
+				throw new IOException(Resources.Error_StreamNotFound(streamName, file.Name));
 			}
 			if (exists && FileMode.CreateNew == mode)
 			{
-				throw new IOException(string.Format(Resources.Culture,
-					Resources.Error_StreamExists, streamName, file.Name));
+				throw new IOException(Resources.Error_StreamExists(streamName, file.Name));
 			}
 
 			return new AlternateDataStreamInfo(file.FullName, streamName, path, exists);
@@ -337,8 +323,33 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static AlternateDataStreamInfo GetAlternateDataStream(string filePath, string streamName, FileMode mode)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
-			return CreateInfo(filePath).GetAlternateDataStream(streamName, mode);
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+			if (!SafeNativeMethods.FileExists(filePath)) throw new FileNotFoundException(null, filePath);
+			SafeNativeMethods.ValidateStreamName(streamName);
+
+			if (FileMode.Truncate == mode || FileMode.Append == mode)
+			{
+				throw new NotSupportedException(Resources.Error_InvalidMode(mode));
+			}
+
+#if NET35
+			FileIOPermissionAccess permAccess = (FileMode.Open == mode) ? FileIOPermissionAccess.Read : FileIOPermissionAccess.Read | FileIOPermissionAccess.Write;
+			new FileIOPermission(permAccess, filePath).Demand();
+#endif
+
+			string path = SafeNativeMethods.BuildStreamPath(filePath, streamName);
+			bool exists = SafeNativeMethods.FileExists(path);
+
+			if (!exists && FileMode.Open == mode)
+			{
+				throw new IOException(Resources.Error_StreamNotFound(streamName, filePath));
+			}
+			if (exists && FileMode.CreateNew == mode)
+			{
+				throw new IOException(Resources.Error_StreamExists(streamName, filePath));
+			}
+
+			return new AlternateDataStreamInfo(filePath, streamName, path, exists);
 		}
 
 		/// <summary>
@@ -410,17 +421,19 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static bool DeleteAlternateDataStream(this FileSystemInfo file, string streamName)
 		{
-			if (null == file) throw new ArgumentNullException("file");
+			if (null == file) throw new ArgumentNullException(nameof(file));
 			SafeNativeMethods.ValidateStreamName(streamName);
 
+#if NET35
 			const FileIOPermissionAccess permAccess = FileIOPermissionAccess.Write;
 			new FileIOPermission(permAccess, file.FullName).Demand();
+#endif
 
 			var result = false;
 			if (file.Exists)
 			{
 				string path = SafeNativeMethods.BuildStreamPath(file.FullName, streamName);
-				if (-1 != SafeNativeMethods.SafeGetFileAttributes(path))
+				if (SafeNativeMethods.FileExists(path))
 				{
 					result = SafeNativeMethods.SafeDeleteFile(path);
 				}
@@ -461,8 +474,25 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static bool DeleteAlternateDataStream(string filePath, string streamName)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
-			return CreateInfo(filePath).DeleteAlternateDataStream(streamName);
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+			SafeNativeMethods.ValidateStreamName(streamName);
+
+#if NET35
+			const FileIOPermissionAccess permAccess = FileIOPermissionAccess.Write;
+			new FileIOPermission(permAccess, filePath).Demand();
+#endif
+
+			var result = false;
+			if (SafeNativeMethods.FileExists(filePath))
+			{
+				string path = SafeNativeMethods.BuildStreamPath(filePath, streamName);
+				if (SafeNativeMethods.FileExists(path))
+				{
+					result = SafeNativeMethods.SafeDeleteFile(path);
+				}
+			}
+
+			return result;
 		}
 
 		#endregion

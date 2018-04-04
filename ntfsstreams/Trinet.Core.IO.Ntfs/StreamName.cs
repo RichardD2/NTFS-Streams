@@ -23,14 +23,7 @@ namespace Trinet.Core.IO.Ntfs
 {
 	internal sealed class StreamName : IDisposable
 	{
-		#region Private Data
-
-		private static readonly SafeHGlobalHandle _invalidBlock = SafeHGlobalHandle.Invalid();
-		private SafeHGlobalHandle _memoryBlock = _invalidBlock;
-
-		#endregion
-
-		#region Properties
+		private static readonly SafeHGlobalHandle InvalidBlock = SafeHGlobalHandle.Invalid();
 
 		/// <summary>
 		/// Returns the handle to the block of memory.
@@ -38,14 +31,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The <see cref="SafeHGlobalHandle"/> representing the block of memory.
 		/// </value>
-		public SafeHGlobalHandle MemoryBlock
-		{
-			get { return _memoryBlock; }
-		}
-
-		#endregion
-
-		#region Methods
+		public SafeHGlobalHandle MemoryBlock { get; private set; } = InvalidBlock;
 
 		/// <summary>
 		/// Performs application-defined tasks associated with freeing, 
@@ -53,10 +39,10 @@ namespace Trinet.Core.IO.Ntfs
 		/// </summary>
 		public void Dispose()
 		{
-			if (!_memoryBlock.IsInvalid)
+			if (!MemoryBlock.IsInvalid)
 			{
-				_memoryBlock.Dispose();
-				_memoryBlock = _invalidBlock;
+				MemoryBlock.Dispose();
+				MemoryBlock = InvalidBlock;
 			}
 		}
 
@@ -71,14 +57,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public void EnsureCapacity(int capacity)
 		{
-			int currentSize = _memoryBlock.IsInvalid ? 0 : _memoryBlock.Size;
+			int currentSize = MemoryBlock.IsInvalid ? 0 : MemoryBlock.Size;
 			if (capacity > currentSize)
 			{
 				if (0 != currentSize) currentSize <<= 1;
 				if (capacity > currentSize) currentSize = capacity;
 
-				if (!_memoryBlock.IsInvalid) _memoryBlock.Dispose();
-				_memoryBlock = SafeHGlobalHandle.Allocate(currentSize);
+				if (!MemoryBlock.IsInvalid) MemoryBlock.Dispose();
+				MemoryBlock = SafeHGlobalHandle.Allocate(currentSize);
 			}
 		}
 
@@ -93,9 +79,9 @@ namespace Trinet.Core.IO.Ntfs
 		/// </returns>
 		public string ReadString(int length)
 		{
-			if (0 >= length || _memoryBlock.IsInvalid) return null;
-			if (length > _memoryBlock.Size) length = _memoryBlock.Size;
-			return Marshal.PtrToStringUni(_memoryBlock.DangerousGetHandle(), length);
+			if (0 >= length || MemoryBlock.IsInvalid) return null;
+			if (length > MemoryBlock.Size) length = MemoryBlock.Size;
+			return Marshal.PtrToStringUni(MemoryBlock.DangerousGetHandle(), length);
 		}
 
 		/// <summary>
@@ -135,7 +121,5 @@ namespace Trinet.Core.IO.Ntfs
 
 			return name;
 		}
-
-		#endregion
 	}
 }

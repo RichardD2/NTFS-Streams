@@ -1,115 +1,98 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{520A3DF2-071D-47AE-9B25-2A286306DDF5}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Trinet.Core.IO.Ntfs</RootNamespace>
-    <AssemblyName>Trinet.Core.IO.Ntfs</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>
-    </ApplicationIcon>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Trinet.Core.IO.Ntfs.snk</AssemblyOriginatorKeyFile>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Trinet.Core.IO.Ntfs.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Trinet.Core.IO.Ntfs.XML</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AlternateDataStreamInfo.cs" />
-    <Compile Include="FileStreamAttributes.cs" />
-    <Compile Include="FileStreamType.cs" />
-    <Compile Include="FileSystem.cs" />
-    <Compile Include="SafeHGlobalHandle.cs" />
-    <Compile Include="SafeNativeMethods.cs" />
-    <Compile Include="StreamName.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Trinet.Core.IO.Ntfs.snk" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "$(SolutionDir)..\binaries\" /y /c
-xcopy "$(TargetDir)$(TargetName).xml" "$(SolutionDir)..\binaries\" /y /c</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;net462;net35</TargetFrameworks>
+		<RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+		<Version>4.1.0</Version>
+		<PackageProjectUrl>https://github.com/RichardD2/NTFS-Streams</PackageProjectUrl>
+		<PackageReleaseNotes>##4.1.0.0
+
+### IMPROVEMENTS:
+
+* Multi-targeting for .NET Standard 2.0, .NET Framework 4.6.2, and .NET Framework 3.5;
+
+### BUG FIXES:
+
+* No longer adds the long path prefix if the path is already prefixed.
+
+##4.0.0.0
+
+### IMPROVEMENTS:
+
+* The assembly now has a strong name.
+
+##3.5.0.1
+
+### BUG FIXES:
+
+* Fixes a bug where zero-length alternate streams prevented other streams from being enumerated.		</PackageReleaseNotes>
+		<Description>Utilities for working with alternate data streams on NTFS file systems.</Description>
+		<Authors>Richard Deeming</Authors>
+		<Copyright>Copyright © 2002-2016 Richard Deeming</Copyright>
+		<NeutralLanguage>en-GB</NeutralLanguage>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>Trinet.Core.IO.Ntfs.snk</AssemblyOriginatorKeyFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<RepositoryUrl>https://github.com/RichardD2/NTFS-Streams</RepositoryUrl>
+		<RepositoryType>Github</RepositoryType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+		<DocumentationFile>bin\Debug\netstandard2.0\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
+		<DocumentationFile>bin\Debug\net462\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
+		<DocumentationFile>bin\Debug\net35\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+		<DocumentationFile>bin\Release\netstandard2.0\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningsAsErrors />
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net462|AnyCPU'">
+		<DocumentationFile>bin\Release\net462\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningsAsErrors />
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|AnyCPU'">
+		<DocumentationFile>bin\Release\net35\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningsAsErrors />
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="_ReSharper.Caches\**" />
+		<Compile Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
+		<EmbeddedResource Remove="_ReSharper.Caches\**" />
+		<EmbeddedResource Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
+		<None Remove="_ReSharper.Caches\**" />
+		<None Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+		<DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net462'">
+		<DefineConstants>NET462;NETFULL</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net35'">
+		<DefineConstants>NET35;NETFULL</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
+	</PropertyGroup>
 </Project>

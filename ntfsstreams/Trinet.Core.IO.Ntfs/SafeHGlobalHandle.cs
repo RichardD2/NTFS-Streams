@@ -27,12 +27,6 @@ namespace Trinet.Core.IO.Ntfs
 	/// </summary>
 	internal sealed class SafeHGlobalHandle : SafeHandle
 	{
-		#region Private Data
-
-		private readonly int _size;
-
-		#endregion
-
 		#region Constructor
 
 		/// <summary>
@@ -47,7 +41,7 @@ namespace Trinet.Core.IO.Ntfs
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
 		private SafeHGlobalHandle(IntPtr toManage, int size) : base(IntPtr.Zero, true)
 		{
-			_size = size;
+			Size = size;
 			SetHandle(toManage);
 		}
 
@@ -69,10 +63,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// <see langword="true"/> if the handle value is invalid;
 		/// otherwise, <see langword="false"/>.
 		/// </value>
-		public override bool IsInvalid
-		{
-			get { return IntPtr.Zero == handle; }
-		}
+		public override bool IsInvalid => IntPtr.Zero == handle;
 
 		/// <summary>
 		/// Returns the size of this memory block.
@@ -80,10 +71,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The size of this memory block, in bytes.
 		/// </value>
-		public int Size
-		{
-			get { return _size; }
-		}
+		public int Size { get; }
 
 		#endregion
 
