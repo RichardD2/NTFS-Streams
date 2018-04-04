@@ -1,4 +1,4 @@
-#NTFS Streams
+# NTFS Streams
 
 A library for working with alternate data streams on NTFS file systems from .NET applications.
 
@@ -9,14 +9,14 @@ Now available as a NuGet package: https://www.nuget.org/packages/Trinet.Core.IO.
     Install-Package Trinet.Core.IO.Ntfs
 
 
-##Introduction
+## Introduction
 
 Since NT 3.1, the NTFS file system has supported multiple data-streams for files. There has never been built-in support for viewing or manipulating these additional streams, but the Windows API functions include support for them with a special file syntax: `Filename.ext:StreamName`. Even Win9x machines can access the alternative data streams of files on any NTFS volume they have access to, e.g., through a mapped drive. Because the `Scripting.FileSystemObject` and many other libraries call the `CreateFile` API behind the scenes, even scripts have been able to access alternative streams quite easily (although enumerating the existing streams has always been tricky).
 
 In .NET, however, it seems someone decided to add some checking to the format of filenames. If you attempt to open a `FileStream` on an alternative stream, you will get a "Path Format not supported" exception. I have been unable to find any class in the CLR that provides support for alternative data streams, so I decided to roll my own.
 
 
-##Using the Classes
+## Using the Classes
 
 The `AlternateDataStreamInfo` class represents the details of an individual stream, and provides methods to create, open, or delete the stream.
 
@@ -25,7 +25,7 @@ The static `FileSystem` class provides methods to retrieve the list of streams f
 All methods on the `FileSystem` class offer overloads which accept either a path or a `FileSystemInfo` object. The overloads which accept a `FileSystemInfo` object can also be invoked as extension methods.
 
 
-###Example:
+### Example:
 
     using System;
     using System.Drawing;
@@ -66,7 +66,7 @@ All methods on the `FileSystem` class offer overloads which accept either a path
     file.DeleteAlternateDataStream("Zone.Identifier");
 
 
-##Files Included
+## Files Included
 
 * The *Trinet.Core.IO.Ntfs* folder contains the source code.
 * The *doc* folder contains the documentation and FxCop project.
@@ -74,7 +74,7 @@ All methods on the `FileSystem` class offer overloads which accept either a path
 * The *other* folder contains a compatibility wrapper for the original version of this code, and a sample to recursively delete the "Zone.Identifier" stream from all files in a given path.
 
 
-##References
+## References
 
 This code was inspired by Dino Esposito's MSDN article from March 2000: 
 http://msdn.microsoft.com/en-us/library/ms810604.aspx
