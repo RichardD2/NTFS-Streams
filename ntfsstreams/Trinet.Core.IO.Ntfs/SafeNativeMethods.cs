@@ -40,6 +40,7 @@ namespace Trinet.Core.IO.Ntfs
 		public const int DefaultBufferSize = 0x1000;
 
 		private const int ErrorFileNotFound = 2;
+		private const int ErrorPathNotFound = 3;
 
 		// "Characters whose integer representations are in the range from 1 through 31, 
 		// except for alternate streams where these characters are allowed"
@@ -285,21 +286,29 @@ namespace Trinet.Core.IO.Ntfs
 
 		public static string BuildStreamPath(string filePath, string streamName)
 		{
+			if (string.IsNullOrEmpty(filePath)) return string.Empty;
+
+			// Trailing slashes on directory paths don't work:
+
 			string result = filePath;
-			if (!string.IsNullOrEmpty(filePath))
+			int length = result.Length;
+			while (0 < length && '\\' == result[length - 1])
 			{
-				if (1 == result.Length)
-				{
-					result = ".\\" + result;
-				}
-
-				result += StreamSeparator + streamName + StreamSeparator + "$DATA";
-
-				if (MaxPath <= result.Length && !result.StartsWith(LongPathPrefix))
-				{
-					result = LongPathPrefix + result;
-				}
+				length--;
 			}
+
+			if (length != result.Length)
+			{
+				result = 0 == length ? "." : result.Substring(0, length);
+			}
+
+			result += StreamSeparator + streamName + StreamSeparator + "$DATA";
+
+			if (MaxPath <= result.Length && !result.StartsWith(LongPathPrefix))
+			{
+				result = LongPathPrefix + result;
+			}
+
 			return result;
 		}
 
@@ -319,7 +328,19 @@ namespace Trinet.Core.IO.Ntfs
 			if (-1 == result)
 			{
 				int errorCode = Marshal.GetLastWin32Error();
-				if (ErrorFileNotFound != errorCode) ThrowLastIOError(name);
+				switch (errorCode)
+				{
+					case ErrorFileNotFound:
+					case ErrorPathNotFound:
+					{
+						break;
+					}
+					default:
+					{
+						ThrowLastIOError(name);
+						break;
+					}
+				}
 			}
 
 			return result;
@@ -335,7 +356,19 @@ namespace Trinet.Core.IO.Ntfs
 			if (!result)
 			{
 				int errorCode = Marshal.GetLastWin32Error();
-				if (ErrorFileNotFound != errorCode) ThrowLastIOError(name);
+				switch (errorCode)
+				{
+					case ErrorFileNotFound:
+					case ErrorPathNotFound:
+					{
+						break;
+					}
+					default:
+					{
+						ThrowLastIOError(name);
+						break;
+					}
+				}
 			}
 
 			return result;

@@ -3,9 +3,9 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net462;net35</TargetFrameworks>
 		<RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-		<Version>4.1.0</Version>
+		<Version>4.1.1</Version>
 		<PackageProjectUrl>https://github.com/RichardD2/NTFS-Streams</PackageProjectUrl>
-		<PackageReleaseNotes>##4.1.0.0
+		<PackageReleaseNotes>##4.1.1.0
 
 ### IMPROVEMENTS:
 
@@ -13,6 +13,7 @@
 
 ### BUG FIXES:
 
+* Accessing ADS on directories with a trailing slash no long throws an exception.
 * No longer adds the long path prefix if the path is already prefixed.
 
 ##4.0.0.0
