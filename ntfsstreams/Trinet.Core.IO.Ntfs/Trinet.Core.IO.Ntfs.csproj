@@ -38,7 +38,7 @@
 * Fixes a bug where zero-length alternate streams prevented other streams from being enumerated.		</PackageReleaseNotes>
 		<Description>Utilities for working with alternate data streams on NTFS file systems.</Description>
 		<Authors>Richard Deeming</Authors>
-		<Copyright>Copyright © 2002-2016 Richard Deeming</Copyright>
+		<Copyright>Copyright © 2002-2025 Richard Deeming</Copyright>
 		<NeutralLanguage>en-GB</NeutralLanguage>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>Trinet.Core.IO.Ntfs.snk</AssemblyOriginatorKeyFile>
