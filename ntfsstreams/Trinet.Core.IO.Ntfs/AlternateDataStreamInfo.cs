@@ -629,6 +629,91 @@ namespace Trinet.Core.IO.Ntfs
 
 		#endregion
 
+		#region -Create / CreateText / AppendText
+
+		/// <summary>
+		/// Creates or opens the alternate data stream for writing.
+		/// </summary>
+		/// <returns>
+		/// A writeable <see cref="FileStream"/> for the alternate data stream.
+		/// </returns>
+		/// <exception cref="SecurityException">
+		/// The caller does not have the required permission. 
+		/// </exception>
+		/// <exception cref="UnauthorizedAccessException">
+		/// The caller does not have the required permission, or the file is read-only.
+		/// </exception>
+		/// <exception cref="IOException">
+		/// The specified file is in use. 
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// The path of the stream is invalid.
+		/// </exception>
+		/// <exception cref="Win32Exception">
+		/// There was an error opening the stream.
+		/// </exception>
+		public FileStream Create()
+		{
+			return Open(FileMode.Create, FileAccess.ReadWrite, FileShare.None);
+		}
+
+		/// <summary>
+		/// Creates or opens the alternate data stream for writing UTF-8 encoded text.
+		/// If the alternate data stream already exists, its contents are overwritten.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="StreamWriter" /> that writes to the specified alternate data stream using UTF-8 encoding.
+		/// </returns>
+		/// <exception cref="SecurityException">
+		/// The caller does not have the required permission. 
+		/// </exception>
+		/// <exception cref="UnauthorizedAccessException">
+		/// The caller does not have the required permission, or the file is read-only.
+		/// </exception>
+		/// <exception cref="IOException">
+		/// The specified file is in use. 
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// The path of the stream is invalid.
+		/// </exception>
+		/// <exception cref="Win32Exception">
+		/// There was an error opening the stream.
+		/// </exception>
+		public TextWriter CreateText()
+		{
+			Stream fileStream = Open(FileMode.Create, FileAccess.ReadWrite, FileShare.None);
+			return new StreamWriter(fileStream);
+		}
+
+		/// <summary>
+		/// Creates or opens the alternate data stream for appending UTF-8 encoded text.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="StreamWriter" /> that writes to the specified alternate data stream using UTF-8 encoding.
+		/// </returns>
+		/// <exception cref="SecurityException">
+		/// The caller does not have the required permission. 
+		/// </exception>
+		/// <exception cref="UnauthorizedAccessException">
+		/// The caller does not have the required permission, or the file is read-only.
+		/// </exception>
+		/// <exception cref="IOException">
+		/// The specified file is in use. 
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// The path of the stream is invalid.
+		/// </exception>
+		/// <exception cref="Win32Exception">
+		/// There was an error opening the stream.
+		/// </exception>
+		public TextWriter AppendText()
+		{
+			Stream fileStream = Open(FileMode.Append, FileAccess.Write, FileShare.None);
+			return new StreamWriter(fileStream);
+		}
+
+		#endregion
+
 		#endregion
 	}
 }

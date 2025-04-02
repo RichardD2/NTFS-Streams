@@ -3,9 +3,18 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net462;net35</TargetFrameworks>
 		<RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-		<Version>4.1.1</Version>
+		<Version>4.1.2</Version>
 		<PackageProjectUrl>https://github.com/RichardD2/NTFS-Streams</PackageProjectUrl>
-		<PackageReleaseNotes>##4.1.1.0
+		<PackageReleaseNotes>##4.1.2.0
+
+### IMPROVEMENTS:
+
+* Added Create, CreateText, and AppendText methods to the AlternateDataStream class.
+* Switched to Microsoft.NETFramework.ReferenceAssemblies to allow building withing Framework 3.5 installed.
+* Enabled reproducible builds.
+* Enabled source link.
+
+##4.1.1.0
 
 ### IMPROVEMENTS:
 
@@ -37,34 +46,10 @@
 		<RepositoryUrl>https://github.com/RichardD2/NTFS-Streams</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>NTFS Alternate Data Streams</PackageTags>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-		<DocumentationFile>bin\Debug\netstandard2.0\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
-		<DocumentationFile>bin\Debug\net462\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
-		<DocumentationFile>bin\Debug\net35\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-		<DocumentationFile>bin\Release\netstandard2.0\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsAsErrors />
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net462|AnyCPU'">
-		<DocumentationFile>bin\Release\net462\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsAsErrors />
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|AnyCPU'">
-		<DocumentationFile>bin\Release\net35\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningsAsErrors />
 	</PropertyGroup>
@@ -76,10 +61,6 @@
 		<EmbeddedResource Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
 		<None Remove="_ReSharper.Caches\**" />
 		<None Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Properties\" />
 	</ItemGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
@@ -94,7 +75,9 @@
 		<DefineConstants>NET35;NETFULL</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
-	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="8.0.0" PrivateAssets="All" />
+	</ItemGroup>
 </Project>
