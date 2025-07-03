@@ -36,6 +36,7 @@ namespace Trinet.Core.IO.Ntfs
 
 		public const int MaxPath = 256;
 		private const string LongPathPrefix = @"\\?\";
+		private const string LongUncPathPrefix = @"\\?\UNC\";
 		public const char StreamSeparator = ':';
 		public const int DefaultBufferSize = 0x1000;
 
@@ -306,7 +307,8 @@ namespace Trinet.Core.IO.Ntfs
 
 			if (MaxPath <= result.Length && !result.StartsWith(LongPathPrefix))
 			{
-				result = LongPathPrefix + result;
+				string prefix = result.StartsWith(@"\\", StringComparison.Ordinal) ? LongUncPathPrefix : LongPathPrefix;
+				result = prefix + result;
 			}
 
 			return result;
