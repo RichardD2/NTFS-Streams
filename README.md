@@ -2,7 +2,7 @@
 
 A library for working with alternate data streams on NTFS file systems from .NET applications.
 
-Originally published on CodeProject: http://www.codeproject.com/KB/cs/ntfsstreams.aspx
+Originally published on [CodeProject](https://web.archive.org/web/20211124225114/https://www.codeproject.com/Articles/2670/Accessing-alternative-data-streams-of-files-on-an)
 
 Now available as a NuGet package: https://www.nuget.org/packages/Trinet.Core.IO.Ntfs/
 
@@ -81,7 +81,7 @@ http://msdn.microsoft.com/en-us/library/ms810604.aspx
 
 ## License
 
-Copyright (c) 2002-2018 Richard Deeming
+Copyright (c) 2002-2025 Richard Deeming
 All rights reserved.
 
 This code is free software: you can redistribute it and/or modify it under the terms of either

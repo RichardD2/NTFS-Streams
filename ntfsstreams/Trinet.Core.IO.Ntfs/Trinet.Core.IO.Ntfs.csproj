@@ -52,6 +52,8 @@
 		<RepositoryUrl>https://github.com/RichardD2/NTFS-Streams</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>NTFS Alternate Data Streams</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
@@ -67,6 +69,11 @@
 		<EmbeddedResource Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
 		<None Remove="_ReSharper.Caches\**" />
 		<None Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
